@@ -29,7 +29,7 @@ Coding center code - comment out the following 4 lines of code when ready for pr
 
 #port = 12340
 #base_url = get_base_url(port)
-output = ""
+
 
 # app = Flask(__name__, static_url_path=base_url + 'static')
 
@@ -42,7 +42,7 @@ Deployment code - uncomment the following line of code when ready for production
 @app.route('/')
 # @app.route(base_url, methods=['GET'])
 def home():
-    return render_template('index.html', output=None)
+    return render_template('index.html', output="")
 
 @app.route('/' + "<word>")
 # @app.route(base_url + "<word>")
