@@ -1,560 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!--meta tags-->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Sentiment Text Generator Static Page" />
-    <link rel="icon" href="" />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="An Easy to Use Haiku Generator">
+    <meta name="keywords" content="Haiku, AI, Machine-learning, ML, AICamp">
+    <meta name="author" content="Asher Wheaton And Isabella Lu">
+    <title>hAIku generator</title>
 
-    <title>Sentiment Text Generator</title>
+    <link rel = "icon" href="{{url_for('static',filename = 'Images/haikuslogo.png')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{url_for('static',filename = 'styles.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!--<nav class = "navbar navbar-expand-sm justify-content-center navbar-custom">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link 2</a>
+            </li>
+        </ul>
+    </nav>-->
+    <div class = "header">
+        <img src="{{url_for('static', filename = 'Images/HeaderImage.png')}}" class = "header-image">
+        <h1 class = "header-text">Haiku Generator</h1>
+    </div>
+    <div class = "container mb-3 main">
+        <div class = "row">
+            <div class = "col-sm-6 mt-3">
+                <div class = "container generator genbox d-flex align-items-center flex-column">
+                    <input type="text" class="form-control" id = "input" pattern = "[A-Z][a-z]{3}" name = "word" placeholder="Enter Your Word">
+                    <h3 id = "output" name = "output">
+                      {{output}}
+                    </h3>
+                    
 
+                    <button onclick = 'generate()' type = "button" class = "btn mt-auto"> write hAIku </button>
+<!--         <form name="form" action= method="POST">
+                      <textarea
+                        placeholder="Enter a prompt"
+                        name="prompt"
+                        required
+                      ></textarea>
 
-    <!-- Import the webpage's stylesheet -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" />
-    <!-- font links -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Load an icon library to show a hamburger menu (bars) on small screens -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <!-- Import the webpage's javascript file -->
-    <script src="{{ url_for('static', filename='script.js')}}" defer></script>
-  </head>
-  <!--BODY: ALL HTML ELMENTS GO WITHIN THIS TAG-->
-  <body>
-    <header>
-      <nav>
-        <div>
-          <a href="." id="home-link">Sentiment Text Generator</a>
-        </div>
-        <div class="links">
-          <a class="nav-option" href="#overview">Overview</a>
-          <a class="nav-option" href="#product">Product</a>
-          <a class="nav-option" href="#motives">Motive</a>
-          <a class="nav-option" href="#methods">Methods</a>
-          <a class="nav-option" href="#students">Students</a>
-          <a class="nav-option" href="https://www.ai-camp.org/" target="_blank"
-            >Join AI Camp</a
-          >
-          <a
-            class="nav-option"
-             id="icon"
-            href="javascript:void(0);"
-            onclick="makeResponsive()"
-          >
-            <i class="fa fa-bars"></i>
-          </a>
-        </div>
-      </nav>
-    </header>
+                      <button
+                        class="button-display"
+                        type="submit"
+                        id="submit"
+                        value="submit"
+                      >
+                        Generate
+                      </button>
+                  </form>
 
-    <main>
-      <!--//////////////////////////////////////SIDE NAV BAR////////////////////////////////////-->
-      <div class="cover" id="cover"></div>
-        <div class="side-bar" id="side-bar">
-          <span id="close" onclick="closeSideBar()">&times;</span>
-          <a href="#overview" onclick="closeSideBar()">Overview</a>
-          <a href="#product" onclick="closeSideBar()">Product</a>
-          <a href="#motives" onclick="closeSideBar()">Motive</a>
-          <a href="#methods" onclick="closeSideBar()">Methods</a>
-          <a href="#students" onclick="closeSideBar()">Students</a>
-          <a href="https://www.ai-camp.org/" target="_blank"
-            >Join AI Camp</a
-          >
-        </div>
-
-      
-      <!--//////////////////////////////////////INTRO SECTION////////////////////////////////////-->
-      <div class="intro">
-        <div>
-          <h1>
-            Sentiment Text Generator
-          </h1>
-          <h2>
-            We built and trained an NLP model that generates text based on user
-            prompt and selected sentiment.
-          </h2>
-          <br />
-          <a href="#product" class="button-display">
-            Try the product here!
-          </a>
-        </div>
-      </div>
-
-      <!--//////////////////////////////////////OVERVIEW SECTION////////////////////////////////////-->
-      <div class="overview container" id="overview">
-        <img src={{url_for('static', filename='assets/typing.jpeg')}}/>
-        <div>
-          
-        
-        <h2>
-          Product Overview
-        </h2>
-        <h3>
-          What the product does
-        </h3>
-        <p>
-          We want to create a text generation model that will generate text with
-          the specific parameter of mimicking a human emotion. The user can
-          select an emotion that they want the model to base the text on, and
-          the model will then create text of the user's choosing and centering
-          it on the emotion it is supposed to portray.
-        </p>
-        <h3>
-          How the product works
-        </h3>
-        <p>
-          In order to try the product, you first select an emotion (positive or
-          negative), enter a brief prompt to begin your text and, then click
-          "generate". The text box then generates a paragraph that builds off of
-          the user's prompt and is able to express satisfaction or displeasure.
-        </p>
-          </div>
-      </div>
-
-      <!--//////////////////////////////////////PRODUCT SECTION////////////////////////////////////-->
-
-      <div class="product container" id="product">
-        <h2>
-          Try the product
-        </h2>
-        <h3>
-          Choose a sentiment, enter a prompt, click "generate"! When the page reloads, scroll to see your text.
-        </h3>
-        <!--<a href="https://icons8.com/icon/676/happy">Icons by Icons8</a>-->
-        <div class="sentiment-text">
-          <form name="form" action="{{ url_for('result') }}" method="POST">
-            <div class="select-sentiment">
-              <div class="choose-sentiment" id="open-sentiment">
-                Choose a sentiment...
+                  <textarea
+                    readonly
+                    placeholder="Generated haiku will appear here..."
+                    id="generate"
+                  >{{output}}
+                  </textarea>             -->
+                  
               </div>
-              <div id="content">
-                <div class="input">
-                  <input
-                    required
-                    type="radio"
-                    name="sentiment"
-                    value="positive"
-                    id="positive"
-                  /><label class="label" for="positive"
-                    >Positive (e.g excited, happy)</label
-                  >
-                  <img
-                    src="https://img.icons8.com/ios/50/000000/happy--v1.png"
-                  />
+        </div>
+          
+            <div class = "col-sm-6 mt-3">
+                <div class = "container genbox about d-flex align-items-center flex-column">
+                    <h1>Haiku Generator</h1>
+                    <h3>Create AI generated haikus!</h3>
+                    <h4>Product Overview:</h4>
+                    <h5>The Haiku Generator creates a fun haiku using NLP (in this case a specified GPT-2 model). You can prompt the AI with the first word of the haiku, and the AI will try finish it for you or suggest another</h5>
+                    <h4>Why this product?</h4>
+                    <h5>The Haiku Generator is fun and easy to use! If you have writer's block or if you just want to read a short poem, the haiku generator has you covered</h5>
                 </div>
-                <div class="input">
-                  <input
-                    required
-                    type="radio"
-                    name="sentiment"
-                    value="negative"
-                    id="negative"
-                  /><label class="label" for="negative"
-                    >Negative (e.g disappointed)</label
-                  >
-                  <img src="https://img.icons8.com/ios/50/000000/sad.png"/>
+            </div>
+        </div>
+    </div>
+
+    <div class = "motivations container-fluid mt-3 d-flex align-items-center flex-column">
+        <h1 class = "mt-3">Our Motivations</h1>
+        <div class = "motivation m-odd mt-3"><h1>1</h1><p>We wanted to do something with text generation</p></div>
+        <div class = "motivation m-even mt-3"><h1>2</h1><p>We like poetry :D</p></div>
+        <div class = "motivation m-odd mt-3"><h1>3</h1><p>Haikus are short and stick to a strict outline</p></div>
+        <div class = "motivation m-even mt-3"><h1>4</h1><p>Haikus are fun! and its interesting to see a machine create art</p></div>
+    </div>
+
+    <div class = "resources container-fluid d-flex align-items-center flex-column">
+        <h1 class = "mt-3">Resources</h1>
+        <h2>Some things that helped us develop our model</h2>
+        <div class = "container bullets">
+            <div class = "row">
+                <div class = "col-sm-4">
+                    <h6>Data</h6>
+                    <ul class = "info">
+                        <li><a href = "https://github.com/herval/creative_machines/blob/master/haikuzao/src/main/resources/haiku.txt">Haikuzao Dataset</a><br><p>We used the Haikuzao dataset to train our AI model. 
+                            However, during the data preprocessing, after condensing each poem into string list items, we had to clean some of the poems due to them being inappropriate.</p></li>
+                    </ul>
                 </div>
-              </div>
-              <textarea
-                placeholder="Enter a prompt (e.g This was an amazing product!)"
-                name="prompt"
-                required
-              ></textarea>
-
-              <button
-                class="button-display"
-                type="submit"
-                id="submit"
-                value="submit"
-              >
-                Generate
-              </button>
+                <div class = "col-sm-4">
+                    <h6>Our AI model</h6>
+                    <ul class = "info">
+                        <li><p>We used GPT-2 by OpenAI for our model! GPT is a deep learning language model that can generate all types of language, from poems to stories that replicate human-like language, by using token to token prediction. </p></li>
+                    </ul>
+                </div>
+                <div class = "col-sm-4">
+                    <h6>Understanding GPT-2 + visuals</h6>
+                    <ul class = "info">
+                        <li><a href="https://jalammar.github.io/illustrated-gpt2/">https://jalammar.github.io/illustrated-gpt2/</a></li>
+                        <li><a href="https://towardsdatascience.com/openai-gpt-2-understanding-language-generation-through-visualization-8252f683b2f8">https://towardsdatascience.com/openai-gpt-2-understanding-language-generation-through-visualization-8252f683b2f8</a></li>
+                        <li><p>We used these articles to help us understand GPT-2!</p></li>
+                    </ul>
+                </div>
             </div>
-          </form>
-
-          <textarea
-            readonly
-            placeholder="Generated text will appear here..."
-            id="generate"
-          >{{generated}}
-          </textarea>
         </div>
-      </div>
-
-      <!--//////////////////////////////////////MOTIVES SECTION////////////////////////////////////-->
-
-      <div class="motives container" id="motives">
-        <div class="description">
-          <h2>
-            Why this product?
-          </h2>
-          <h3>
-            Expressing sentiment through your text
-          </h3>
-          <p>
-            We want our tool to be a helpful and efficient text generator for
-            people to use when drafting emails, speeches, product reviews, or
-            other things that require sentiment and tone. It will also help
-            businesses understand their customer's clear opinions and make
-            precise decisions based on a clear expression of emotion.
-          </p>
+    </div>
+    
+    <div class = "overview">
+        <h2 class = "mt-5">A Quick Overview of</h2>
+        <h1>GPT-2</h1>
+        <div class = "container mt-3 mb-6">
+            <div class = "row d-flex">
+                <div class = "col-sm-4 mt-3">
+                    <div class = "infobox">
+                        <img src="{{url_for('static', filename = 'Images/Prediction.png')}}">
+                        <h3>Prediction</h3>
+                        <p>GPT is a language model that specializes in predicting the next word based on previous context, using masked self attention. (Other models, such as BERT use self attention which allows "fill in the blank " situations.)</p>
+                    </div>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "infobox">
+                        <img src="{{url_for('static', filename = 'Images/attention.png')}}">
+                        <h3>Masked Self Attention</h3>
+                        <p>Masked self attention prevents the model from seeing tokens to the right of the position being calculated. 
+                            (in the image above, it is at position 4)</p>
+                    </div>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "infobox">
+                        <img src="{{url_for('static', filename = 'Images/headexample.png')}}">
+                        <h3>Layers & Heads</h3>
+                        <p>A layer is a decoder, each layer has 12 different mechanisms (heads), for a total of 144 (12x12) attention patterns. These help the AI distribute importance between the relationships of individual words in a sentence. </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!--<div class="description-img">-->
-            <img
-          class="description-img"
-          src={{url_for('static', filename="assets/WhyThisProduct_image.png")}}
-          alt="Images with people and emotions"
-/>
-        <!--</div>-->
-      </div>
+    </div>
 
-      <!--//////////////////////////////////////METHODS SECTION////////////////////////////////////-->
-      <div class="methods container" id="methods">
-        <h2>
-          Methods
-        </h2>
-        <div class="method-cards">
-          <div class="method">
-            <img
-              src={{url_for('static', filename='assets/Datasets_image.png')}}
-            />
-            <h3>
-              Datasets
-            </h3>
-            <p>
-              The best place to learn about simple emotions is online reviews,
-              thus we are using the "Amazon Reviews for Sentiment Analysis"
-              dataset from the website Kaggle in order to train the model. Our
-              pre-processing consisted of splitting reviews into positive and
-              negative categories and removing labels.
-            </p>
-            <br />
-            <a
-              class="button-display"
-              href="https://www.kaggle.com/bittlingmayer/amazonreviews"
-              target="_blank"
-              >View</a
-            >
-          </div>
-
-          <div class="method">
-            <img
-              src={{url_for('static', filename='assets/GPTmodel_image.png')}}
-            />
-            <h3>
-              GPT Model
-            </h3>
-            <p>
-              We're also using GPT by EleutherAI. GPT is a language model that
-              uses deep learning to generate human-like text, (which can also
-              include code, stories, poems, etc.) in a matter of seconds. GPT
-              uses methods ranging from self-attention to probability
-              distribution to produce one token after another with a user
-              prompt.
-            </p>
-            <br />
-            <a
-              class="button-display"
-              href="https://github.com/minimaxir/aitextgen"
-              target="_blank"
-              >View</a
-            >
-          </div>
-
-          <div class="method">
-            <img
-              src={{url_for('static', filename='assets/JupyterNotebooks_image.png')}}
-            />
-            <h3>
-              Jupyter Notebooks
-            </h3>
-            <p>
-              We used Jupyter Notebooks on the Cocalc servers to learn Python
-              basics and practice using libraries like NumPy and NLTK. We also
-              used this platform and the skils we learned (splitting, loops,
-              lists) to clean our dataset. Overall, we learned many skills with
-              this resource that we were able to apply to our project.
-            </p>
-            <br />
-            <a
-              class="button-display"
-              href="https://jupyter.org/"
-              target="_blank"
-              >View</a
-            >
-          </div>
+    <div class = "steps d-flex align-items-center flex-column">
+        <div class = "container mt-3 mb-4">
+            <div class = "row d-flex">
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">1</div>
+                    <p>Picking the function of our generator! We knew we wanted to do something in line with text generation. We ended up choosing to create a haiku generator.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">2</div>
+                    <p>Gathering data! We found multiple kaggle datasets but ended up using the Haikuzao dataset on github.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">3</div>
+                    <p>Understanding GPT (Generative Pre Training), the core of our model. </p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">4</div>
+                    <p>Training our model on the Haikuzao dataset, modifying settings to adjust the poems.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">5</div>
+                    <p>Cleaned some of the haikus in the dataset.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">6</div>
+                    <p>Combined the post-processing and the model, to create our final haiku generator.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">7</div>
+                    <p>Design a website to house our product and express our ambition.</p>
+                </div>
+                <div class = "col-sm-4 mt-3">
+                    <div class = "circle">8</div>
+                    <p>share!</p>
+                </div>
+            </div>
         </div>
-                <!--//////GPT ALGORITHMS MINI SECTION//////-->
-        <div class="algorithms-container">
-          <h3>
-            GPT Algorithms
-          </h3>
-          <div class="gpt-description">
-            <div class="high-level">
-              <img
-                src={{url_for('static', filename='assets/HighLevelExplanation_image.png')}}
-              />
+    </div>
 
-              <div class="gpt-text">
-                <h4>
-                  High Level Explanation
-                </h4>
-
-                <ol>
-                  <li>
-                    GPT 3 uses a model called a transformer. Transformers are
-                    deep learning models that use attention mechanisms to weigh
-                    the importance of different words.
-                  </li>
-                  <li>
-                    This allows it to use something called token probability
-                    distribution to assign a score based on likelihood of a
-                    certain word coming after another word.
-                  </li>
-                  <li>
-                    GPT 3 selects the word with the highest likelihood score
-                    after each word to piece together sentences.
-                  </li>
-                </ol>
-              </div>
+    <div class = "problems d-flex align-items-center flex-column">
+        <h1>Difficulties Encountered</h1>
+        <div class = "container mt-3 mb-6">
+            <div class = "row d-flex">
+                <div class = "col-sm-6 mt-3">
+                    <div class = "problem">
+                        <div class = "circle">1</div>
+                        <p>Errors and mistakes in code / debugging</p>
+                    </div>
+                </div>
+                <div class = "col-sm-6 mt-3">
+                    <div class = "problem">
+                        <div class = "circle">2</div>
+                        <p>cocalcg8 server being slow, and only tolerating one person running the code at once</p>
+                    </div>
+                </div>
+                <div class = "col-sm-6 mt-3">
+                    <div class = "problem">
+                        <div class = "circle">3</div>
+                        <p>Cocalc3 being slow</p>
+                    </div>
+                </div>
+                <div class = "col-sm-6 mt-3">
+                    <div class = "problem">
+                        <div class = "circle">4</div>
+                        <p>AI is trilingual and some of the haikus in the dataset were not pg-13</p>
+                    </div>
+                </div>
             </div>
-            <br />
-            <div class="self-attention">
-              <div class="gpt-text">
-                <h4>
-                  Self-Attention
-                </h4>
-                <p>
-                  GPT-3 uses something called self-attention in order to focus
-                  on the words that are most important. It does this by taking
-                  in the understanding of other associated words that serve as
-                  relevant context to the word that will be processed. This
-                  allows GPT-3 to focus on only the most important words, making
-                  the results more accurate. The word being process has a query
-                  representation of the words that will be used against the
-                  other words. All the other words have keys that identify them
-                  and value vectors that are calculated to find the relevancy to
-                  the word being processed.
-                </p>
-              </div>
-              <img
-                src={{url_for('static', filename='assets/Self-Attention_image.png')}}
-              />
-            </div>
-          </div>
-
-          <br />
-          <div class="approach">
-            <h4 style="text-align:center"><u>
-              Our Approach</u>
-            </h4>
-            <div class="approach-steps">
-              <div class="step">
-                 <span>1</span>
-                <p>
-                  We researched GPT and familiarized ourselves with the
-                  concepts, then we decided to utilize the AITextGen tool to
-                  build and train a model for our project.
-                </p>
-              </div>
-              <span class="arrow"></span>
-              <div class="step">
-                <span>2</span>
-                <p>
-                  We cleaned our Amazon Review Dataset by splitting it into
-                  positive and negative reviews and removing labels with Python.
-                </p>
-              </div>
-              <span class="arrow"></span>
-              <div class="step">
-                 <span>3</span>
-                <p>
-                  We researched the purpose of the model parameters and trained
-                  an instance of our model with initial values for the
-                  parameters.
-                </p>
-              </div>
-              <span class="arrow"></span>
-              <div class="step">
-                 <span>4</span>
-                <p>
-                  After testing our model with prompts, we began the process of
-                  hypertuning: adjusting the paramaters, and increasing the
-                  amount of data in order to increase the accuracy of our model.
-                  We adjusted the learning rate, training time, and number of
-                  lines of preprocessed data.
-                </p>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+    
+    <div class = "creators d-flex align-items-center flex-column">
+        <h1 class = "mt-3 mb-5">Meet The Creators!</h1>
 
-      <!--//////////////////////////////////////STUDENTS SECTION////////////////////////////////////-->
-      <div class="students container" id="students">
-        <h2>
-          Meet the students!
-        </h2>
-        <div class="card-container">
-          <!--verina's card-->
-          <div class="student-card">
-            <img
-              src={{url_for('static', filename='assets/Verina.jpg')}}
-            />
-            <div class="student-description">
-            <h3>
-              Verina Ko
-            </h3>
-              <h4 class="role">Data Scientist, Web Developer</h4>
-            <p>
-              <!--<b><u>Role:</u></b> Data Scientists, Web Developer
-              <br />
-              <b><u>School:</u></b> Diamond Bar High School
-              <br />
-              <b><u>Fun Fact:</u></b> Loves shopping during free time.-->
-              Verina will be a junior at Diamond Bar High School this fall. She enjoys shopping in her free time.
-            </p>
-              </div>
-          </div>
-          <!--issac's card-->
-          <div class="student-card">
-            <img src={{url_for('static', filename='assets/Isaac.png')}}>
-            <div class="student-description">
-              <h3>
-          Isaac Choi
-        </h3>
-              <h4 class="role">
-                Product Manager, Web Developer
-              </h4>
-              <p>
-                Isaac will be a freshman at University Preparatory Academy this fall. He likes discussing history facts.
-              </p>
+        <div id="demo" class="carousel slide" data-ride="carousel">
+            <ul class="carousel-indicators">
+                <li data-target="#demo" data-slide-to="0" class="active"></li>
+                <li data-target="#demo" data-slide-to="1"></li>
+                <li data-target="#demo" data-slide-to="2"></li>
+            </ul>
+            
+            <div class="carousel-inner d-flex">
+                <div class="carousel-item active">
+                    <div class="creators d-flex align-items-center flex-column">
+                        <img src="{{url_for('static', filename = 'Images/Asher.png')}}" alt="Asher">
+                        <div class="description"><h1>Asher Wheaton (Lead Coder, Data Scientist, Web-Dev)</h1><p>Hi, I'm Asher, I like finding new projects to work on with friends. From cyber security to conlanging, I like to do it all. I love to code, and have been doing it for years, having started off with python.</p></div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/Isabella.png')}}" alt="Isabella"></div>
+                    <div class="description"><h1>Isabella Lu (ML engineer, Web Dev.)</h1><p>Hi, I'm a rising sophomore. I speak both French and English! I love math, computer science, and web design. When I'm not coding, I'm drawing or hanging out with my two cats, Helo and Starbuck.</p></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/John.png')}}" alt="John"></div>
+                    <div class="description"><h1>Jay Jackson (Product Manager, Web Dev.)</h1><p>Hi I'm Jay and I like making and achieving new goals, especially those that are difficult. There is no better feeling than triumph and working to achieve it, especially when working with a team as great as this one.</p></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/Soham.png')}}" alt="Soham"></div>
+                    <div class="description"><h1>Soham Lahiri (Web dev., Data Scientist)</h1><p>Hi, I am about to go to tenth grade and some of the things I like to do is playing soccer and basketball and of course coding. For this project I helped creating the website and the text generation section.</p></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/Justin.png')}}" alt="Justin"></div>
+                    <div class="description"><h1>Justin Yi (Product Manager)</h1><p>Hi I'm Justin and I served as the team's product manager and instructor! I am passionate about education and hold a particular interest in fairness in machine learning</p></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/Annabelle.png')}}" alt="Annabelle"></div>
+                    <div class="description"><h1>Annabelle Whittington (Data scientist, Web Dev.)</h1><p>Hi, I’m Anabelle. I'll be starting my freshman year in high school this fall. I hope to go on to have a job in programming. I enjoy reading, hanging out with friends, and learning new things about AI!</p></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="creators d-flex align-items-center flex-column"><img src="{{url_for('static', filename = 'Images/Owen.png')}}" alt="Owen"></div>
+                    <div class="description"><h1>Owen Hopp (Data Scientist)</h1><p>Hi I'm Owen, I will be starting my freshman year in autumn of 2021. My hobbies are doing math, physics, and playing the piano for fun or practice. I enjoy hikes, having fun with friends, and science.</p></div>
+                </div>
             </div>
             
-          </div>
-          <!--claire's card-->
-          <div class="student-card">
-            <img src={{url_for('static', filename='assets/Claire.png')}}> 
-            <div class="student-description">
-              <h3>
-                 Claire Andrzejek
-              </h3>
-              <h4 class="role">
-                Product Manager, Web Developer
-              </h4>
-              <p>
-               Claire will be in the eighth grade at Convent of the Sacred Heart SF this fall. She plays the cello.
-              </p>
-            </div>
-            
-          </div>
-          <!--alyzee's card-->
-          <div class="student-card">
-            <img src={{url_for('static', filename='assets/Alyzee.png')}}> 
-            <div class="student-description">
-              <h3>
-                Alyzee Sosa
-              </h3>
-              <h4 class="role">
-                Machine Learning Engineer, Web Developer
-              </h4>
-              <p>
-                 Alyzee will be a senior at Downtown Magnets High School this fall. She likes coding and hopes to pursue a technological career in college. She also likes hiking and camping with her family.
-              </p>
-            </div>
-            
-          </div>
-          
-          <!--raphael's card-->
-          
-        <div class="student-card">
-            <img src={{url_for('static', filename='assets/Raphael.jpg')}}> 
-            <div class="student-description">
-              <h3>
-                Raphael Chaumartin
-              </h3>
-              <h4 class="role">
-                Data Scientist
-              </h4>
-              <p>
-                Raphael will be a junior at West High School this fall. His favorite video game is Minecraft.
-              </p>
-            </div>
-            
-          </div>
-          
-          <!--charlotte's card-->
-          <div class="student-card">
-            <img src={{url_for('static', filename='assets/Charlotte.jpg')}}> 
-            <div class="student-description">
-              <h3>
-                Charlotte Choi
-              </h3>
-              <h4 class="role">
-                Data Scientist, Web Developer
-              </h4>
-              <p>
-                Charlotte will be a sophomore at Dos Pueblos High School this fall. She enjoys English, History, and her school's Mock Trial program. She also plays the cello.
-              </p>
-            </div>
-            
-          </div>
-
-          
-          <!--justin's card-->
-         <div class="student-card">
-            <img src={{url_for('static', filename='assets/Justin.jpg')}}>  
-            <div class="student-description">
-              <h3>
-                Justin Yi
-              </h3>
-              <h4 class="role">
-                Product Manager
-              </h4>
-              <p>
-                Justin was the team's amazing TA.
-              </p>
-            </div>
-            
-          </div>
+            <a class="carousel-control-prev control" href="#demo" data-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </a>
+            <a class="carousel-control-next control" href="#demo" data-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </a>
         </div>
-        
-        
-      </div>
-    </main>
+    </div>
 
-    <footer>
-      <div class="ai-camp">
-        <h2>
-        Join A.I. Camp
-      </h2>
-            <img src={{url_for('static', filename='assets/ai_camp_logo.png')}}>
-
-      </div>
-      <h3>
-        Learn A.I. in 3 weeks with zero coding experience
-      </h3>
-      <p>
-        A.I. camp teaches middle and high school students machine learning and career frameworks through real life experience. Prepare for your major and career by joining us!
-      </p>
-      <br>
-      <a class="button-display" href="https://www.ai-camp.org/" target="_blank">Join AI Camp</a>
-    </footer>
-  </body>
+    <script>
+        function generate() {
+            document.getElementById("output").innerHTML = '<div class="spinner-border" role="status"><span class="sr-only">Loading...</span></div>'
+            location = "{{base_url}}" + document.getElementById("input").value
+//             $.ajax({
+//                 url: document.getElementById("input").value,
+//                 data: {
+//                     word: document.getElementById("input").value
+//                 },
+//                 success: function(haiku) {
+//                     document.getElementById("output").innerHTML = haiku
+//                     cosole.log(haiku)
+//                 }
+//             });
+        };
+    </script>
+</body>
 </html>

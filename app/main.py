@@ -2,7 +2,6 @@
 
 ## **IMPORTANT:** only collaborators on the project where you run
 ## this can access this web server!
-
 """
     Bonus points if you want to have internship at AI Camp
     1. How can we save what user built? And if we can save them, like allow them to publish, can we load the saved results back on the home page? 
@@ -13,79 +12,64 @@
 
 # import basics
 import os
+import time
 
 # import stuff for our web server
-from flask import Flask, flash, request, redirect, url_for, render_template
-from flask import send_from_directory
-from flask import jsonify
-from utils import get_base_url, allowed_file, and_syntax
+from flask import Flask, request, render_template, redirect, Markup
+from utils import get_base_url
+from Post_Processing import generate_haiku as generate, optimize_accuracy as optimize
 
 # import stuff for our models
-import torch
 from aitextgen import aitextgen
+ai = aitextgen(model_folder="trained_model")
 
 '''
 Coding center code - comment out the following 4 lines of code when ready for production
 '''
-# load up the model into memory
-# you will need to have all your trained model in the app/ directory.
 
-'''
-##JACKSON##
-Need to change absolute path to download from gdrive and make model instances for each of the 2 saved models
-'''
-model_path = '/projects/ffb3608a-abf1-4dd2-af5c-8e98ccab67df/Batch_A/trained_models/'
-ai_pos = aitextgen(to_gpu=False, model_folder=model_path+'positive_output_directory')
-ai_neg = aitextgen(to_gpu=False, model_folder=model_path+'negative_output_directory')
-
-# setup the webserver
-# port may need to be changed if there are multiple flask servers running on same server
 port = 12340
 base_url = get_base_url(port)
-# app = Flask(__name__, static_url_path=base_url+'static')
+output = ""
+
+# app = Flask(__name__, static_url_path=base_url + 'static')
+
+app = Flask(__name__)
 
 '''
 Deployment code - uncomment the following line of code when ready for production
 '''
-app = Flask(__name__)
 
-
-@app.route('/', methods = ['GET'])
-# @app.route(base_url, methods = ['GET'])
+@app.route('/')
+# @app.route(base_url, methods=['GET'])
 def home():
-    return render_template('index.html')
+    return render_template('index.html', base_url=base_url, output=None)
 
-@app.route('/result', methods = ['POST'])
-# @app.route(base_url+'/result', methods = ['POST'])
-def result():
-    prompt = request.form['prompt']
-    sentiment = str(request.form['sentiment'])
-    model = ai_pos if sentiment == 'positive' else ai_neg
-    generated = model.generate(
-        n=1,
-        batch_size=3,
-        prompt=str(prompt),
-        max_length=50,
-        temperature=0.9,
-        return_as_list=True
-    )
-    return render_template('index.html', generated=generated[0])
+@app.route('/' + "<word>")
+# @app.route(base_url + "<word>")
+def return_haiku(word=""):
+    output_list = ai.generate(prompt = word.split(" ")[0], return_as_list = True, temperature = 1.0, max_length=20)[0].replace("\n\n", "\n").split("\n")[0:3]
+    output = Markup(("<br>").join(output_list))
+    app.logger.debug(output)
+    return render_template('index.html', base_url=base_url, output=output)
+
+# @app.route(base_url + "/result", methods=['POST'])
+# def result():
+#     output = ""
+#     prompt = request.form['prompt']
+#     output = ai.generate(prompt = prompt.split(" ")[0], return_as_list = True, temperature = 1.0, max_length=20)[0].split("\n\n")[0]
+#     haiku = optimize(output)
+#     if isinstance(haiku, list): return haiku
+#     if isinstance(haiku, set):
+#         if haiku[0] < score: score, final_haiku = haiku[0], haiku[1]
+#     haiku = "\n".join(haiku)
+#     app.logger.debug(haiku)
+#     return render_template('index.html', output=haiku)
 
 
 if __name__ == "__main__":
-    '''
-    coding center code
-    '''
-    # IMPORTANT: change the cocalcx.ai-camp.org to the site where you are editing this file.
     website_url = 'cocalc3.ai-camp.org'
     print(f"Try to open\n\n    https://{website_url}" + base_url + '\n\n')
 
-    app.run(host = '0.0.0.0', port=port, debug=True)
-    import sys; sys.exit(0)
-
-    '''
-    scaffold code
-    '''
-    # Only for debugging while developing
-    # app.run(port=80, debug=True)
-
+    app.run(host='0.0.0.0', port=port, debug=True)
+    import sys
+    sys.exit(0)
