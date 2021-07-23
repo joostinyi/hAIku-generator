@@ -27,8 +27,8 @@ ai = aitextgen(model_folder="trained_model")
 Coding center code - comment out the following 4 lines of code when ready for production
 '''
 
-port = 12340
-base_url = get_base_url(port)
+#port = 12340
+#base_url = get_base_url(port)
 output = ""
 
 # app = Flask(__name__, static_url_path=base_url + 'static')
