@@ -42,7 +42,7 @@ Deployment code - uncomment the following line of code when ready for production
 @app.route('/')
 # @app.route(base_url, methods=['GET'])
 def home():
-    return render_template('index.html', base_url=base_url, output="")
+    return render_template('index.html', output="")
 
 @app.route('/' + "<word>")
 # @app.route(base_url + "<word>")
@@ -50,7 +50,7 @@ def return_haiku(word=""):
     output_list = ai.generate(prompt = word.split(" ")[0], return_as_list = True, temperature = 1.0, max_length=20)[0].replace("\n\n", "\n").split("\n")[0:3]
     output = Markup(("<br>").join(output_list))
     app.logger.debug(output)
-    return render_template('index.html', base_url=base_url, output=output)
+    return render_template('index.html', output=output)
 
 # @app.route(base_url + "/result", methods=['POST'])
 # def result():
