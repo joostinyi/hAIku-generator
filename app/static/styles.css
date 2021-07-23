@@ -1,0 +1,367 @@
+body{
+    background-color: #4452a2;
+    text-align: center;
+    min-width: 300px;
+    min-height: 100%;
+}
+nav{
+    position: fixed;
+    top:0;
+    width: 100%;
+}
+.navbar-custom{
+    background-color: white;
+}
+
+.header{
+    position: relative;
+    background-image: url("Images/HeaderImage.png");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    min-height:250px;
+}
+.header-image{
+    visibility: hidden;
+    width: 100%;
+    height: auto;
+}
+.header-text{
+    color:#929fdf;
+    font-weight: 700;
+    position: absolute;
+    font-size: 4em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container{
+    max-width:100%;
+    display: inline-block;
+}
+.main > div > div{
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+.genbox{
+    height: 100%;
+    display: inline-block;
+    min-height: 500px;
+    width: calc(100% - 2vw)
+}
+.row{
+    min-height:80vh;
+    display:flex;
+}
+.generator{
+    border: 3vw solid white;
+    border-radius: 5vw;
+    padding: 2vw;
+}
+#input {
+    font-size: 2em;
+}
+.generator button{
+    background-color: rgb(255, 255, 255);
+    color:#00084e;
+    font-size:1.75em;
+}
+#output{
+    color: white;
+    margin-top: 10px;
+    font-size: 1.75em;
+    display: inline-block;
+    word-break: break-word;
+}
+.about{
+    border-radius: 5vw;
+    background-color: white;
+    padding: 3vw
+}
+.about h1{
+    font-size:3.5em;
+}
+.about h3{
+    color:#4e5dab;
+}
+.about h4{
+    margin-top:2%;
+    font-size: 2em;
+}
+.about h5{
+    font-size: 1.25em;
+}
+
+.motivations{
+    background-color:#eef0fa;;
+    display: inline-block;
+    padding-bottom: 1vw;
+}
+.motivation{
+    width:75%;
+    padding: 1%;
+    display: flex;
+    align-items: center;
+}
+.m-odd{
+    border: 0.5vw solid black;
+}
+.m-even{
+    border: 0.5vw solid #4e5dab;
+}
+.motivations > h1{
+    font-size: 3.5em;
+}
+.motivation h1, .motivation p{
+    display: inline;
+    margin-bottom: 0;
+}
+.motivation h1{
+    font-weight: 700;
+    margin-right: 3vw;
+    font-size: 5em;
+}
+.motivation p{
+    color: #4e5dab;
+    font-size: 1.5em;
+}
+
+.resources{
+    background-color: white;
+}
+.resources h1{
+    font-size: 3.5em;
+}
+.bullets{
+    width:85%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bullets > div > div h6{
+    margin-top:5%;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #4e5dab;
+}
+
+.info{
+    font-size: 1.25em;
+    font-weight: 500;
+    word-wrap: break-word;
+}
+
+.overview{
+    background-color: #eef0fa;
+    display: inline-block;
+    width:100%;
+}
+.overview > div > div div{
+    display: inline-block;
+}
+.overview div{
+    margin-bottom: 1vw;
+}
+.overview > h1{
+    font-size: 3.5em;
+}
+.infobox{
+    background-color: white;
+    overflow: hidden;
+    border-radius: 5vw;
+    height:100%;
+    width:100%;
+    padding:1vw;
+}
+.infobox img{
+    width: 100%;
+    height: auto;
+}
+.infobox h3, .infobox p{
+    margin-top: 2vw;
+}
+
+.steps > div{
+    width: 75%;
+}
+.circle{
+    margin-left: auto;
+    margin-right: auto;
+    border: .25vh solid white;
+    height: 12vw;
+    width: 12vw;
+    border-radius: 50%;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6vw;
+    color:white;
+}
+.steps > div > div div p{
+    color:white;
+    font-size: 2vw;
+}
+
+.problems{
+    background-color: #929FDD;
+    padding-bottom: 2vw;
+}
+.problems > h1{
+    color:white;
+    margin-top: 5vw;
+    margin-bottom: .3vw;
+    font-size: 5.6vw;
+}
+.problems > div{
+    width: 75%
+}
+.problems > div > div > div{
+    padding: .2vw;
+}
+.problem {
+    padding: 1vw;
+    border: .3vw solid white;
+    height: 100%;
+}
+.problem p{
+    margin-top: 2vw;
+    font-size: 1.75em;
+    color:white;
+}
+
+.creators{
+    background-color: #eef0fa;
+    padding-bottom: 1vw;
+}
+.carousel{
+    width:75vw;
+    max-width: 100%;
+    overflow: hidden;
+    height:60vw
+}
+.carousel-item > div img{
+    width: auto;
+    height: 35vw;
+}
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}   
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+.description{
+    width: 100%;
+    background-color: #929fdf;
+    padding-top:1.5vw;
+    height: 100%;
+    color: white;
+    height: 25vw;
+    overflow: hidden;
+}
+
+.carousel-item h1 {
+    font-size: 4vw;
+}
+
+.carousel-item p{
+    font-size: 2.4vw;
+}
+
+.control span{
+    width: 3vw;
+    height: 3vw;
+}
+
+@media only screen and (max-width:500px){
+    .header-text{
+        font-size: 12vw;
+    }
+}
+@media only screen and (max-width:700px){
+    .problems > h1{
+        font-size: 39px;
+    }
+    .circle{
+        width: 84px;
+        height: 84px;
+        font-size: 42px;
+    }
+    .steps > div > div > div p{
+        font-size: 14px;
+    }
+}
+@media only screen and (min-width:900px){
+    .header-text{
+        font-size: 7.3vw;
+    }
+}
+@media only screen and (min-width:1000px){
+    .about h1{
+        font-size: 5.6vw;
+    }
+    .about h3{
+        font-size: 2.8vw;
+    }
+    .about h4{
+        font-size: 3.2vw;
+    }
+    .about h5{
+        font-size: 2vw;
+    }
+
+    .generator button{
+        width:45%;
+        font-size: 2.7vw;
+    }
+    #input, #output{
+        font-size: 3.1vw;
+    }
+    
+    .motivations > h1{
+        font-size: 5.6vw;
+    }
+    .motivation h1{
+        font-size: 8vw;
+    }
+    .motivation p{
+        font-size: 2.4vw;
+    }
+
+    .resources h1{
+        font-size: 5.6vw;
+    }
+    .resources h2{
+        font-size: 3.2vw;
+    }
+
+    .overview > h1{
+        font-size: 5.6vw;
+    }
+    .overview > h2{
+        font-size: 3.2vw;
+    }
+
+    .bullets > div > div h6{
+        font-size: 2.4vw;
+    }
+    .info{
+        font-size: 2vw;
+    }
+    .infobox h3{
+        font-size: 2.8vw;
+    }
+    .infobox{
+        font-size: 1.6vw;
+    }
+
+    .problems h1{
+        font-size: 5.6vw;
+    }
+    .problem p{
+        font-size: 2.8vw;
+    }
+
+    .creators h1{
+        font-size: 4vw;
+    }
+}
